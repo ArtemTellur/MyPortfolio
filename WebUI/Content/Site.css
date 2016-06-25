@@ -1,0 +1,37 @@
+﻿body { 
+    background-color:#E5D6FF;
+    font-family: 'raleway-extralight'; 
+}
+@font-face {
+    font-family: 'raleway-extralight';
+    src: url('../Content/fonts/raleway-extralight.ttf') format('truetype');
+}
+.self-container{
+    padding: 0 0 50px 0;
+}
+.container-edit{
+    margin-top:10px;
+}
+.logo a{
+    color:white;
+}
+.logo a:hover{
+    text-decoration:none;
+}
+.nav{
+    margin-right:15px;
+}
+.ed-photo{
+    width:auto; 
+    max-height:400px;
+
+}
+.btn-save,.btn-save:hover,.btn-save:focus{
+    background-color: #2c2c2b;
+    color: white;
+    text-decoration:none;
+}
+.link-create-alb {
+    padding-right: 30px;
+    line-height:77px;
+}

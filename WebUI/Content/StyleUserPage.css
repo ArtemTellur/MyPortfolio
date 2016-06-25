@@ -1,0 +1,80 @@
+﻿body {
+    font-family: 'raleway-extralight';
+    background-color: #E5D6FF;
+}
+
+@font-face {
+    font-family: 'raleway-extralight';
+    src: url('../Content/fonts/raleway-extralight.ttf') format('truetype');
+}
+
+.self-container {
+    padding: 0 0 50px 0;
+}
+
+.album, .album:hover, .album:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.album-name {
+    text-decoration: none;
+}
+
+.album-photo {
+    height: 270px;
+    width: 100%;
+}
+
+.album-nophoto {
+    height: 270px;
+    width: 100%;
+}
+
+.btn-album {
+    background-color: #2c2c2b;
+    color: white;
+    border:none;
+}
+
+
+.btn-album a:hover {
+    text-decoration: none;
+}
+
+.btn-album:hover {
+    background-color: darkgrey;
+    color:white;
+}
+
+.icon, .icon:hover, .icon:focus {
+    color: #262626;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+.container-photo {
+    margin-top: 20px;
+}
+
+.user-photo {
+    max-width: 500px;
+    height: auto;
+}
+
+.container-user-album {
+    margin: 70px 50px 0 50px;
+}
+
+.nav {
+    margin-right: 15px;
+}
+
+.about {
+    padding-bottom: 20px;
+}
+.photo-profile{
+    max-width:60px; 
+    margin-right:5px; 
+    max-height:50px;
+}

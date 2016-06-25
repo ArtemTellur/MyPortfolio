@@ -1,0 +1,123 @@
+﻿@model WebUI.ViewModels.UserViews.UserAdminPageVM
+
+@{
+    ViewBag.Title = "Редактирование профиля";
+}
+@section StyleSettings{
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleSettings.css" rel="stylesheet" />
+}
+
+<div class="container-fluid self-container">
+
+    <header class="row logo">
+        <a href="@Url.Action("UserPage", "User", new { id = Model.Id }, null)">
+            <img src="~/Content/images/logo.png" class="pull-left logo-img" />
+        </a>
+            <div class="pull-right">
+                <ul class="nav navbar-nav navbar-right ">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="@Url.Action("GetPhoto", "Photo", new { pictureId=Model.PictureId})" class="photo-profile" />Профиль<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Моя страница", "UserPage", "User", new { id = Model.GetByEmail(User.Identity.Name) }, null)</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Поиск", "GetAll", "User", new { id = Model.GetByEmail(User.Identity.Name) }, null)</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Редактировать профиль", "Settings", "User", new { id = Model.GetByEmail(User.Identity.Name) }, null)</li>
+                            @if (User.IsInRole("1"))
+                            {
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Админ панель", "AdminPage", "User", new { id = Model.Id }, null)</li>
+                            }
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Выйти", "Logout", "User")</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+</header>
+
+    <div class="row container-photo">
+        <img class="col-xs-4 col-xs-offset-4 set-photo" src="@Url.Action("GetPhoto", "Photo", new { pictureId=Model.PictureId })"  />
+    </div>
+
+    <div class="row">
+        <div class="col-xs-5 col-xs-offset-3">
+            @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Birthdate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Birthdate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.About, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.About, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        @*<input type="file" name="uploadImage" style="margin-top:85px" />*@
+                        <input type="file" class="col-xs-10 filestyle filestyle-reg" name="uploadImage" />
+                    </div>
+
+                    @Html.HiddenFor(model => model.isAdmin)
+                    @Html.HiddenFor(model => model.PictureId)
+
+
+                    <div class="form-group">
+                        <div class="col-xs-offset-5 col-xs-10">
+                            <input type="submit" value="Сохранить" class="btn btn-default save-set" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @section ScriptSettings{
+    <script src="~/Scripts/bootstrap-filestyle.js"></script>
+    <script>
+        $(":file").filestyle({ placeholder: "Фото", buttonText: "Выбрать файл" });
+    </script> 
+    }
+
+</div>

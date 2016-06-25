@@ -1,0 +1,101 @@
+﻿@model WebUI.ViewModels.UserViews.UserGetAllVM
+
+@{
+    ViewBag.Title = "Поиск";
+}
+
+@section StyleGetAll{
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleAdminPage.css" rel="stylesheet" />
+    }
+
+<div class="container-fluid self-container">
+
+    <header class="row logo">
+        <a href="@Url.Action("UserPage", "User", new { id = Model.Id }, null)">
+            <img src="~/Content/images/logo.png" class="logo-img pull-left" />
+        </a>
+
+        <div class="pull-right">
+            <ul class="nav navbar-nav navbar-right ">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="@Url.Action("GetPhoto", "Photo", new { pictureId=Model.GetPhotoId(User.Identity.Name)})" class="photo-profile" />Профиль<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Моя страница", "UserPage", "User", new { id = Model.Id }, null)</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Поиск", "GetAll", "User", new { id = Model.Id }, null)</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Редактировать профиль", "Settings", "User", new { id = Model.Id }, null)</li>
+                        @if (User.IsInRole("1"))
+                        {
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Админ панель", "AdminPage", "User", new { id = Model.Id }, null)</li>
+                        }
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Выйти", "Logout", "User")</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="row container-admin">
+        <div class="col-xs-10  main">
+            <h1 class="header pull-left">Пользователи</h1>
+            <input type="text" class="input-sm pull-right input-search" placeholder="Введите имя"/>
+            <div class="table table-responsive">
+                <table class="table table-striped table-bordered font" id="allUsers">
+                    <tr>
+                        <th>
+                            Фото
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Users.First().Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Users.First().Age)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Users.First().Email)
+                        </th>
+                        <th>
+                            Действия
+                        </th>
+                    </tr>
+                    <tbody id="tableBody">
+                        @foreach (var item in Model.Users)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("UserPage", new { id = item.Id })">
+                                        <img src="@Url.Action("GetPhoto", "Photo", new { pictureId=item.PictureId })" class="users-photos" />
+                                    </a>
+                                    
+                                </td>
+                                <td class="name-cell">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Age)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Перейти на страницу", "UserPage", new { id = item.Id })
+                                </td>
+
+                                @Html.HiddenFor(modelItem => item.PictureId)
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section ScriptsSearch{
+<script src="~/Scripts/search.js"></script>
+}

@@ -1,0 +1,106 @@
+﻿@model WebUI.ViewModels.UserViews.UserRegistration
+
+@{
+    ViewBag.Title = "Регистрация";
+}
+
+@section StyleRegistrationPage {  
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleRegistrationPage.css" rel="stylesheet" />
+}
+
+<div class="container-fluid self-container">
+
+    <header class="row logo">
+        <img src="~/Content/images/logo.png" class="pull-left logo-img" />
+            @Html.ActionLink("Вернуться на главную страницу", "Index", "Home", null,new { @class = "link-reg pull-right" })
+    </header>
+
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+            <h1 class="reg text-center">Регистрация</h1>
+
+            <div class="reg-container">
+                @using (Html.BeginForm("Registration", "User", FormMethod.Post, new { @class = "main", enctype = "multipart/form-data" }))
+            {
+                    @Html.AntiForgeryToken()
+
+                    <div class="row field">
+                        <div class="col-xs-6 text-right">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "label-reg" })
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input-reg" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger block color-error margin-name" })
+                        </div>
+
+                    </div>
+
+
+                    <div class="row field">
+                        <div class="col-xs-6 text-right">
+                            @Html.LabelFor(model => model.Birthdate, htmlAttributes: new { @class = "label-reg" })
+                        </div>
+                        <div class="col-xs-6 ">
+                            @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "input-reg" } })
+                            @Html.ValidationMessageFor(model => model.Birthdate, "", new { @class = "text-danger block color-error margin-birthdate" })
+                        </div>
+                    </div>
+
+                    <div class="row field">
+                        <div class="col-xs-6 text-right">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "label-reg" })
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input-reg" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger block color-error margin-email" })
+
+                        </div>
+                    </div>
+
+                    <div class="row field">
+                        <div class="col-xs-6 text-right">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "label-reg" })
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input-reg" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger block color-error margin-email" })
+
+                        </div>
+                    </div>
+
+                        <div class="row field">
+                            <div class="col-xs-6 text-right">
+                                @Html.LabelFor(model => model.About, htmlAttributes: new { @class = "label-reg" })
+                            </div>
+                            <div class="col-xs-6">
+                                @Html.EditorFor(model => model.About, new { htmlAttributes = new { @class = "input-reg" } })
+                                @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger block color-error margin-about" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <input type="file" class="col-xs-3 filestyle filestyle-reg" name="uploadImage" />
+                            @Html.ValidationMessage("FileError", new { @class = "text-danger color-error" })
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <input type="submit" value="Зарегистрироваться" class="btn btn-reg" />
+                            </div>
+                        </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+
+    @section ScriptRegistration{
+    <script src="~/Scripts/bootstrap-filestyle.js"></script>
+        <script>
+            $(":file").filestyle({ placeholder: "Фото", buttonText: "Выбрать файл" });
+        </script>
+    }
+</div>

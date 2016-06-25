@@ -1,0 +1,110 @@
+﻿@model WebUI.ViewModels.UserViews.UserVM
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+@section StyleUserPage {
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleUserPage.css" rel="stylesheet" />
+}
+
+
+<div class="container-fluid self-container" id="@Model.Id">
+
+    <header class="row logo">
+        <a href="@Url.Action("UserPage", "User", new { id = Model.GetByEmail(User.Identity.Name) }, null)">
+            <img src="~/Content/images/logo.png" class="logo-img pull-left" />
+        </a>
+        <div class="pull-right">
+            <ul class="nav navbar-nav navbar-right ">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="@Url.Action("GetPhoto", "Photo", new { pictureId=Model.GetPhotoId(User.Identity.Name)})" class="photo-profile"/>Профиль<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Моя страница", "UserPage", "User", new { id = Model.GetByEmail(User.Identity.Name) }, null)</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Поиск", "GetAll", "User", new { id = Model.GetByEmail(User.Identity.Name) }, null)</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Редактировать профиль", "Settings", "User", new { id = Model.GetByEmail(User.Identity.Name) }, null)</li>
+                        @if (User.IsInRole("1"))
+                        {
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Админ панель", "AdminPage", "User", new { id = Model.Id }, null)</li>
+                        }
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Выйти", "Logout", "User")</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="row container-photo">
+        <img src="@Url.Action("GetPhoto", "Photo", new { pictureId=Model.PictureId})" class="col-xs-3 col-xs-offset-4 user-photo" />
+
+        <div class="col-xs-4">
+            <h2 class="h2">@Model.Name, @Model.Age</h2>
+            <h3 class="about">@Model.About</h3>
+            @if (User.Identity.Name == Model.Email)
+            {
+                @Html.ActionLink("Создать альбом", "CreateAlbum", "Album", new { id = Model.Id }, new { @class = "btn btn-default btn-album" })
+            }
+        </div>
+    </div>
+
+    <div class="row container-user-album">
+        @foreach (var item in Model.Albums)
+        {
+            <div class="col-xs-4" id="@item.AlbumId">
+                <div class="caption">
+                    <h2 class="album-name">
+                        @item.Name
+                        @if (User.Identity.Name == Model.Email)
+                        {
+                            <a class="glyphicon glyphicon-remove icon pull-right" data-id="@item.AlbumId"></a>
+                            <span>@Html.ActionLink(" ", "Edit", "Album", new { id = item.AlbumId }, new { @class = "glyphicon glyphicon-pencil icon pull-right" })</span>
+                        }
+                    </h2>
+                </div>
+                <a href="@Url.Action("AlbumPage", "Album", new { id = item.AlbumId })">
+                    @if (item.PhotosId.Any())
+                    {
+                        <img src="@Url.Action("GetPhoto", "Photo", new { pictureId = item.PhotosId.Last() })" class="album-photo img-responsive" />
+
+                    }
+
+                    else
+                    {
+                        <img src="~/Content/images/default-no-image.png" class="album-nophoto img-responsive" />
+                    }
+                </a>
+            </div>
+        }
+    </div>
+
+</div>
+
+<div id="deletingModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Удаление альбома</h4>
+            </div>
+            <div class="modal-body">
+                <p>Вы действительно хотите удалить этот альбом?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-album" id="yes">Да</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section ScriptAlbumPage{
+    <script src="~/Scripts/deleting.js"></script>
+}

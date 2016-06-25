@@ -1,0 +1,149 @@
+﻿@model WebUI.ViewModels.AlbumViews.AlbumVM
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+@section StyleAlbumPage{
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleAlbumPage.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-carousel.css" rel="stylesheet" />
+    }
+
+<div class="container-fluid self-container" id="@Model.UserId">
+
+    <header class="row logo">
+        <a href="@Url.Action("UserPage", "User", new { id = Model.GetByEmail(User.Identity.Name) }, null)">
+            <img src="~/Content/images/logo.png" class="logo-img pull-left" />
+        </a>
+
+        <div class="pull-right">
+            <ul class="nav navbar-nav navbar-right ">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="@Url.Action("GetPhoto", "Photo", new { pictureId=Model.GetPhotoId(User.Identity.Name)})" class="photo-profile" />Профиль<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        @if (Model.UserId != Model.GetByEmail(User.Identity.Name))
+                        {
+                        <li>@Html.ActionLink("Назад", "UserPage", "User", new { id = Model.UserId }, null)</li>
+                        <li role="separator" class="divider"></li>
+                        }
+                        <li>@Html.ActionLink("Моя страница", "UserPage", "User", new { id = Model.GetByEmail(User.Identity.Name) }, null)</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Поиск", "GetAll", "User", new { id = Model.UserId }, null)</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Редактировать профиль", "Settings", "User", new { id = Model.UserId }, null)</li>
+                        @if (User.IsInRole("1"))
+                        {
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Админ панель", "AdminPage", "User", new { id = Model.UserId }, null)</li>
+                        }
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Выйти", "Logout", "User")</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-xs-7 col-xs-offset-2">
+            <h1 class="album-name text-center">@Model.Name</h1>
+            <h3 class="description text-center">@Model.Description</h3>            
+        </div>
+    </div>
+    @if (User.Identity.Name == Model.GetEmail(Model.UserId))
+    {
+    <div class="row container-button">
+        <div class="col-xs-3 col-xs-offset-4">
+            @using (Html.BeginForm("UploadImages", "Album", new { albumId = Model.AlbumId }, FormMethod.Post, new { @class = "main row", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()                
+                <input type="file" class="filestyle filestyle-reg" name="uploadImages" data-badge="false" multiple/>
+                <input type="submit" class="input-upload" value="Загрузить" />
+            }
+        </div>
+    </div>
+    }
+
+    <div class="content row">
+        @foreach (var item in Model.PhotosId)
+            {
+            <div class="my-col-xs-3 col-xs-3" id="@item">
+                <img src="@Url.Action("GetPhoto", "Photo", new { pictureId = item })" data-id="@item" class="photo" />
+            </div>
+        }
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">@Model.Name</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <img src="" class="modal-photo" id="modal-photo" data-id="" />
+                            </div>
+                        </div>
+
+                        <!-- Left and right controls -->
+                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <div>
+                        <span class="like">Like<a class="glyphicon glyphicon-heart like" id="like"></a><span id="likesLength"></span></span>
+                        @if (User.Identity.Name == Model.GetEmail(Model.UserId))
+                        {
+                        <button type="button" class="btn btn-default pull-right delete-photo" id="deletePhoto">Удалить фото</button>
+                        }
+                    </div>
+                    <div>
+                        <input placeholder="Комментировать..." class="input-comment" id="text-comment" />
+                        <button type="button" class="btn btn-default button-send" id="send-comment">Отправить</button>
+                    </div>
+
+                    <div id="comments-container">
+                        @*<div class="block-margin">
+                                <img class="user-comment-photo" src="~/Content/images/UoDGctBA0a41.jpg" />
+                                <div class="block-comment">
+                                    <div>User1</div>
+                                    <div class="comment-text">Comment1</div>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+                @*<div class="modal-footer">*@
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                @*</div>*@
+            </div>
+
+        </div>
+    </div>
+
+@section ScriptAlbumPage{
+    <script src="~/Scripts/bootstrap-carousel.js"></script>
+    <script src="~/Scripts/bootstrap-filestyle.js"></script>
+    <script>
+        $(":file").filestyle({ placeholder: "Файл не выбран", buttonText: "Выбрать файл" });
+    </script>
+    <script src="~/Scripts/like.js"></script>
+    <script src="~/Scripts/album.js"></script>
+    <script src="~/Scripts/comment.js"></script>
+    <script src="~/Scripts/deletingPhoto.js"></script>
+}    
+</div>
+

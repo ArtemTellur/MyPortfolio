@@ -1,0 +1,122 @@
+﻿body {
+    background-color: #E5D6FF;
+    font-family: 'raleway-extralight';
+    overflow-x: hidden;
+}
+
+@font-face {
+    font-family: 'raleway-extralight';
+    src: url('../Content/fonts/raleway-extralight.ttf') format('truetype');
+}
+
+.photo {
+    width: 100%;
+    height: 250px;
+}
+
+.my-col-xs-3 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 0;
+}
+
+.my-page {
+    margin-left: 40px;
+}
+
+.my-page, .my-page:hover, .my-page:focus {
+    text-decoration: none;
+}
+
+.modal-photo {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.self-container {
+    padding: 0 0 50px 0;
+}
+
+.btn-album {
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+.photo-alb {
+    position: relative;
+    min-height: 1px;
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 0;
+}
+
+.input-comment {
+    margin-top: 15px;
+    width: 570px;
+    height: 50px;
+}
+
+.button-send,.button-send:hover,.button-send:focus{
+    margin-top: 10px;
+    background-color: #2c2c2b;
+    color: white;
+    border:none;
+}
+
+.like, .like:hover, .like:focus {
+    text-decoration: none;
+}
+
+.like {
+    font-size: 20px;
+    margin-top:10px;
+}
+
+.user-comment-photo {
+    width: 60px;
+    height: 60px;
+}
+
+.block-comment {
+    float: right;
+}
+
+.block-margin {
+    margin-top: 8px;
+}
+
+.comment-text {
+    width: 470px;
+    text-overflow: ellipsis;
+}
+
+.container-button {
+    padding: 0 0 20px 0;
+}
+
+.input-upload {
+    margin: 10px auto 10px 90px;
+    background-color: #2c2c2b;
+    color: white;
+    border:none;
+    width: 140px;
+    height:30px;
+    font-size:18px;
+}
+
+.nav {
+    margin-right: 15px;
+}
+.photo-profile{
+    max-width:60px; 
+    margin-right:5px; 
+    max-height:50px;
+}
+.delete-photo,.delete-photo:hover,.delete-photo:focus{
+    background-color: #2c2c2b;
+    color: white;
+    border:none;
+    margin-top:5px;
+}

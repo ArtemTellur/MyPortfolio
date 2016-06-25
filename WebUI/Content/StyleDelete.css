@@ -1,0 +1,11 @@
+﻿body { 
+    background-color:#E5D6FF;
+    font-family: 'raleway-extralight';
+}
+@font-face {
+    font-family: 'raleway-extralight';
+    src: url('../Content/fonts/raleway-extralight.ttf') format('truetype');
+}
+.self-container{
+    padding:0 0 50px 0;
+}

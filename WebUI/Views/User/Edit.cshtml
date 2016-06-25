@@ -1,0 +1,104 @@
+﻿@model WebUI.ViewModels.UserViews.UsersActionsVM
+
+@{
+    ViewBag.Title = "Редактирование - " + Model.User.Name;
+}
+@section Site{
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+}
+
+<div class="container-fluid self-container">
+
+    <header class="row logo">
+        <a href="@Url.Action("UserPage", "User", new { id = Model.AdminId }, null)">
+            <img src="~/Content/images/logo.png" class="logo-img pull-left" />
+        </a>
+    </header>
+
+    <div class="row container-edit">
+        <div class="col-xs-5 col-xs-offset-4">
+            @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.AdminId)
+                    @Html.HiddenFor(model => model.User.Id)
+                    @Html.HiddenFor(model => model.User.PictureId)
+
+                    <div class="form-group row">
+                        <img class="col-xs-3 ed-photo" src="@Url.Action("GetPhoto", "Photo", new { pictureId=Model.User.PictureId })" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="file" class="col-xs-3 filestyle filestyle-reg" name="uploadImage" />
+                        @Html.ValidationMessage("FileError", new { @class = "text-danger color-error" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.User.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Birthdate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.User.Birthdate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.Birthdate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.About, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.User.About, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.About, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.isAdmin, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-xs-10">
+                            @Html.EditorFor(model => model.User.isAdmin, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.isAdmin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-offset-4 col-xs-8">
+                            <input type="submit" value="Сохранить" class="btn btn-default btn-save" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @section StyleEdit{
+        <script src="~/Scripts/bootstrap-filestyle.js"></script>
+        <script>
+            $(":file").filestyle({ placeholder: "Фото", buttonText:"Выбрать файл" });
+        </script>
+    }
+</div>

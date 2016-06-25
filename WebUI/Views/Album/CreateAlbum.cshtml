@@ -1,0 +1,53 @@
+﻿@model WebUI.ViewModels.AlbumViews.CreateAlbumVM
+
+@{
+    ViewBag.Title = "Создание альбома";
+}
+
+@section StyleCreateAlbum {    
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleCreateAlbum.css" rel="stylesheet" />
+}
+
+<div class="container-fluid self-container">
+
+    <header class="row logo">
+        <a href="@Url.Action("UserPage", "User", new { id = Model.UserId })">
+            <img src="~/Content/images/logo.png" class="pull-left logo-img" />
+        </a>
+
+            @Html.ActionLink("Вернуться на страницу", "UserPage", "User", new { id = Model.UserId}, new { @class= "link-create-alb pull-right" } )
+    </header>
+
+    <div class="row">
+        <h1 class="col-xs-4 col-xs-offset-4 text-center tit">Создание альбома</h1>
+    </div>
+
+    <div class="row container-create-alb">
+        <div class="col-xs-2 col-xs-offset-5">
+                    @using (Html.BeginForm(new { @class = "form-center" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.HiddenFor(model => model.UserId);
+                        <div class="row">
+                            <div class="col-xs-10  form-group">
+                                <h2 class="text-center">Название</h2>                                
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input-create-alb block-align center" } })
+                            </div>
+                            <div class="col-xs-10 form-group">
+                                <h2 class="text-center">Описание</h2>                                
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "input-create-alb block-align center" } })
+                            </div>
+                            <div class="col-xs-10">
+                                <div class="form-group">
+                                    <button class="block-align btn center btn-create-alb" type="submit">Создать</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,83 @@
+﻿@model WebUI.ViewModels.AlbumViews.AlbumVM
+
+@{
+    ViewBag.Title = "Изменение альбома";
+}
+@section Site{
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+}
+
+<div class="container-fluid self-container">
+
+    <header class="row logo">
+        <a href="@Url.Action("UserPage", "User", new { id = Model.UserId })">
+            <img src="~/Content/images/logo.png" class="pull-left logo-img" />
+        </a>
+        
+        @Html.ActionLink("Вернуться на страницу", "UserPage", "User", new { id = Model.UserId }, new { @class = "link-create-alb pull-right" })              
+    </header>
+
+    <div class="row container-edit">
+        <div class="col-xs-5 col-xs-offset-3">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.Label(" ", htmlAttributes: new { @class = "control-label col-md-2 text-right" })
+                        <div class="col-md-8">
+                            @if (Model.PhotosId.Any())
+                {
+                                <img src="@Url.Action("GetPhoto", "Photo", new { pictureId = Model.PhotosId.Last() })" class="album img-responsive" style="max-width:200px" />
+                            }
+
+                            else
+                            {
+                                <img src="~/Content/images/default-no-image.png" class="album img-responsive" style="max-width:200px" />
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2 text-right" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2 text-right" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            @Html.HiddenFor(model => model.AlbumId, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>                    
+                    <div class="col-xs-10 col-xs-offset-2">
+                        <div class="form-group">
+                            <button class="btn btn-save" type="submit">Сохранить</button>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
+</div>

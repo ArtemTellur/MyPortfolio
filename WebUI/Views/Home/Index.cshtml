@@ -1,0 +1,84 @@
+﻿@model WebUI.ViewModels.UserViews.UserAuthVM
+@{
+    ViewBag.Title = "Главная страница";
+}
+
+@section StyleStart {
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleStart.css" rel="stylesheet" />
+}
+
+<div class="container-fluid self-container">
+
+    <div class="container-start">
+
+        <div class="row logo">
+            <a href="@Url.Action("Index", "Home")">
+                <img src="~/Content/images/logo.png" class="pull-left logo-img" />
+            </a>
+            
+@if (User.Identity.IsAuthenticated)
+{
+    <div class = "link-login pull-right">
+        <a href="@Url.Action("UserPage", "User", new { id = Model.User.UserId })">
+            <img src="@Url.Action("GetPhoto", "Photo", new { pictureId=Model.GetPhotoId(User.Identity.Name)})" class="photo-profile" />
+        </a>
+        @Html.ActionLink("Выйти", "Logout", "User")
+    </div>
+
+}
+        </div>
+
+        <div class="container-index">
+            <div class="row">
+                <div class="col-xs-6 col-xs-offset-3">
+                    <h1 class="welcome text-center">Добро пожаловать!</h1>                   
+                    <div class="text-center row">
+                            @if (Model.User == null)
+                            {
+                                <div class="col-xs-6 col-xs-offset-3">
+                                    <form method="post" class="login">
+                                       @Html.ActionLink("Войти", "Login", "User", null, new { @class = "btn btn-start form-common" })
+                                        <p class="label text-start text-center">Еще не зарегистрированы?</p>
+                                        @Html.ActionLink("Зарегистрироваться", "Registration", "User", null, new { @class = "btn btn-start form-common" })
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-xs-12 center">
+                                    <span class="welcome text-center">@Model.User.UserName</span>
+                                    <span>@Html.ActionLink(" ","UserPage", "User", new { id = Model.User.UserId }, new { @class = "glyphicon glyphicon-log-in icon-log" })</span>                                                        
+                                </div>
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="row carousel slide" data-interval="3000" data-ride="carousel">
+            <div class="carousel-inner" role="listbox">
+                <div class="item item-carousel active">
+                    <div style="background: url('../../Content/images/1z8bq3rdwJQ.jpg');background-repeat: no-repeat;background-size: cover; height: 100%;">
+                    </div>
+                </div>
+                <div class="item item-carousel">
+                    <div style="background: url('../../Content/images/_4F9ic4uVrM.jpg');background-repeat: no-repeat;background-size: cover; height: 100%;">
+                    </div>
+                </div>
+                <div class="item item-carousel">
+                    <div style="background: url('../../Content/images/img1.jpg');background-repeat: no-repeat;background-size: cover; height: 100%;">
+                    </div>
+                </div>
+                <div class="item item-carousel">
+                    <div style="background: url('../../Content/images/background.jpg');background-repeat: no-repeat;background-size: cover; height: 100%;">
+                    </div>
+                </div>              
+            </div>
+        </div>
+
+    @section ScriptIndex{
+        <script src="~/Scripts/index.js"></script>
+    }
+</div>

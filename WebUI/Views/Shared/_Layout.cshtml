@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My Portfolio</title>
+    <link rel="SHORTCUT ICON" href="~/Content/images/ico.jpg" type="image/jpg">
+    <link href="~/Content/StyleLayout.css" rel="stylesheet" />
+    @RenderSection("StyleStart", required: false)
+    @RenderSection("StyleAuthorizationPage", required:false)
+    @RenderSection("StyleRegistrationPage", required: false)
+    @RenderSection("StyleUserPage", required: false)
+    @RenderSection("StyleCreateAlbum", required:false)
+    @RenderSection("StyleAdminPage", required: false)
+    @RenderSection("StyleDelete", required: false)
+    @RenderSection("StyleAlbumPage", required: false)
+    @RenderSection("StyleSettings",required:false)
+    @RenderSection("StyleGetAll", required: false)
+    @RenderSection("Site", required: false)
+    @RenderSection("StyleDeleteAlbum", required: false)
+    <meta name="description" content="The description of my page" />
+</head>
+<body>
+        @RenderBody()
+        
+        <footer class="footer">
+            <p>&copy; My Portfolio - @DateTime.Now.Year</p>
+        </footer>
+
+    <script src="~/Scripts/jquery-2.2.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    @RenderSection("ScriptIndex", required:false)
+    @RenderSection("ScriptRegistration", required: false)
+    @RenderSection("ScriptAlbumPage", required: false)
+    @RenderSection("ScriptSettings", required: false)
+    @RenderSection("StyleEdit", required: false)
+    @RenderSection("ScriptsSearch", required: false)
+    @RenderSection("AdminPage", required: false)
+</body>
+</html>
